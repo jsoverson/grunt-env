@@ -1,0 +1,40 @@
+{
+  "name": "grunt-env",
+  "description": "Specify an ENV configuration for future tasks in the chain",
+  "version": "0.1.0",
+  "homepage": "https://github.com/onehealth/grunt-env",
+  "author": {
+    "name": "Jarrod Overson",
+    "email": "jsoverson@gmail.com",
+    "url": "http://jarrodoverson.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/onehealth/grunt-env.git"
+  },
+  "bugs": {
+    "url": "https://github.com/onehealth/grunt-env/issues"
+  },
+  "licenses": [
+    {
+      "type": "Apache2",
+      "url": "https://github.com/onehealth/grunt-env/blob/master/LICENSE-Apache2"
+    }
+  ],
+  "main": "grunt.js",
+  "bin": "bin/grunt-env",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt": "~0.3.17"
+  },
+  "keywords": [
+    "gruntplugin",
+    "env",
+    "config"
+  ]
+}
