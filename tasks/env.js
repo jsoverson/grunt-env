@@ -9,7 +9,7 @@
 "use strict";
 
 function task(grunt) {
-  grunt.registerMultiTask('env', 'Your task description goes here.', function() {
+  grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
     task.run(this.data);
   });
 
