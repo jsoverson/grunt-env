@@ -3,8 +3,8 @@
 Specify an ENV configuration as a task, e.g.
 
 ```
-  grunt.registerTask('dev', 'env:dev lint test');
-  grunt.registerTask('build', 'env:build lint test');
+  grunt.registerTask('dev', 'env:dev lint server watch');
+  grunt.registerTask('build', 'env:build lint other:build:tasks');
 
 ```
 
@@ -25,7 +25,12 @@ grunt.loadNpmTasks('grunt-env');
 ```js
   env : {
     dev : {
-      env_var : 'env value'
+      NODE_ENV : 'development',
+      DEST     : 'temp'
+    },
+    build : {
+      NODE_ENV : 'production',
+      DEST     : 'dist' 
     }
   }
 ```
