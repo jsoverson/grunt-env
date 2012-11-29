@@ -10,13 +10,18 @@
 
 function task(grunt) {
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
-    task.run(this.data);
+
+    var helpers = require('grunt-lib-contrib').init(grunt);
+    var options = helpers.options(this, this.data);
+
+    grunt.verbose.writeflags(options, "Options");
+
+    task.run(options);
   });
 
   task.run = function(config) {
-    grunt.utils._.extend(process.env, config);
+    grunt.util._.extend(process.env, config);
   };
 }
 
 module.exports = task;
-
