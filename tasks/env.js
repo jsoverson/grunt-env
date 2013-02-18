@@ -8,20 +8,8 @@
 
 "use strict";
 
-function task(grunt) {
+module.exports = function (grunt) {
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
-
-    var helpers = require('grunt-lib-contrib').init(grunt);
-    var options = helpers.options(this, this.data);
-
-    grunt.verbose.writeflags(options, "Options");
-
-    task.run(options);
+    grunt.util._.extend(process.env, this.options(), this.data);
   });
-
-  task.run = function(config) {
-    grunt.util._.extend(process.env, config);
-  };
-}
-
-module.exports = task;
+};
