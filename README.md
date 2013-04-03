@@ -26,7 +26,7 @@ grunt.loadNpmTasks('grunt-env');
   env : {
     options : {
  	//Shared Options Hash
-    }
+    },
     dev : {
       NODE_ENV : 'development',
       DEST     : 'temp'
