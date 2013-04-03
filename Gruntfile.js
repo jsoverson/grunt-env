@@ -44,7 +44,14 @@ module.exports = function(grunt) {
     delete process.env.localOption;
   });
 
+  grunt.registerTask('testDotEnv', function(grunt){
+    assert.equal(process.env.dotEnvFileData, 'bar', 'dotEnvFileData should be set');
+    assert.equal(process.env.dotEnvFileOption, 'baz', 'dotEnvFileOption should be set');
+    delete process.env.dotEnvFileData;
+    delete process.env.dotEnvFileOption;
+  });
+
   // Default task.
-  grunt.registerTask('default', ['jshint','env:testData', 'testData', 'env:testOptions', 'testOptions']);
+  grunt.registerTask('default', ['jshint','env:testData', 'testData', 'env:testOptions', 'testOptions', 'testDotEnv']);
 
 };

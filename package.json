@@ -36,5 +36,8 @@
     "gruntplugin",
     "env",
     "config"
-  ]
+  ],
+  "dependencies": {
+    "ini": "~1.1.0"
+  }
 }
