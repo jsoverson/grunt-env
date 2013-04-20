@@ -1,7 +1,7 @@
 {
   "name": "grunt-env",
   "description": "Specify an ENV configuration for future tasks in the chain",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "homepage": "https://github.com/onehealth/grunt-env",
   "author": {
     "name": "Jarrod Overson",
