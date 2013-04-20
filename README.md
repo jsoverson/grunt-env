@@ -1,4 +1,4 @@
-# grunt-env
+# grunt-env [![Build Status](https://secure.travis-ci.org/onehealth/grunt-env.png?branch=master)](http://travis-ci.org/onehealth/grunt-env)
 
 Specify an ENV configuration as a task, e.g.
 
