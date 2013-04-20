@@ -43,6 +43,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## Release History
 
+- 0.3.0 Automatically parses .env files now 
 - 0.2.1 fixed npm install
 - 0.2.0 grunt 0.4.0 support, simplified
 - 0.1.0 Initial release
