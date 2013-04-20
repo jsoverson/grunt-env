@@ -3,9 +3,8 @@
 Specify an ENV configuration as a task, e.g.
 
 ```
-  grunt.registerTask('dev', 'env:dev lint server watch');
-  grunt.registerTask('build', 'env:build lint other:build:tasks');
-
+grunt.registerTask('dev', 'env:dev lint server watch');
+grunt.registerTask('build', 'env:build lint other:build:tasks');
 ```
 
 ## Getting Started
@@ -37,12 +36,27 @@ grunt.loadNpmTasks('grunt-env');
     }
   }
 ```
+## Using external files
+
+You can specify environment values in INI or JSON style and load them via the src option.
+
+```js
+  env : {
+    dev : {
+      src : "dev.json"
+    },
+    heroku : {
+      src : ".env"
+    }
+  }
+```
 
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
 ## Release History
 
+- 0.4.0 Removed automatic parse, added ability to add ini or json style `src` files
 - 0.3.0 Automatically parses .env files now 
 - 0.2.1 fixed npm install
 - 0.2.0 grunt 0.4.0 support, simplified
