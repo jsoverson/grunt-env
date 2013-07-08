@@ -1,4 +1,4 @@
-# grunt-env [![Build Status](https://secure.travis-ci.org/onehealth/grunt-env.png?branch=master)](http://travis-ci.org/onehealth/grunt-env)
+# grunt-env [![Build Status](https://secure.travis-ci.org/smlgbl/grunt-env.png?branch=master)](http://travis-ci.org/smlgbl/grunt-env)
 
 Specify an ENV configuration as a task, e.g.
 
@@ -32,7 +32,13 @@ grunt.loadNpmTasks('grunt-env');
     },
     build : {
       NODE_ENV : 'production',
-      DEST     : 'dist' 
+      DEST     : 'dist',
+      extend   : {
+        PATH     : {
+          'value': 'node_modules/.bin',
+          'delimiter': ':'
+        }
+      }
     }
   }
 ```
