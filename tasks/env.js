@@ -11,19 +11,51 @@ var ini = require('ini');
 
 module.exports = function (grunt) {
 
+    // Helpers dependant on grunt
+    function addToEnv(data) {
+        grunt.util._.extend(process.env, data);
+    }
+
+    function parseFile(file) {
+        var result = {};
+        if(file) {
+            var fileContent = grunt.file.read(file);
+            result = readJson(fileContent) || readIni(fileContent) || result;
+        }
+        return result;
+    }
+
+    function addFile(file) {
+      addToEnv(parseFile(file));
+    }
+
+    function addFiles(files) {
+      files.forEach(function (file) {
+        addToEnv(parseFile(file));
+      });
+    }
+
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
 
     var data = grunt.util._.clone(this.data);
-    delete data.src;
+    var options = this.options();
+    var commonSrc = options.src;
 
-    grunt.util._.extend(process.env, this.options(), data);
+    delete data.src;
+    delete options.src;
+
+    addToEnv(options);
+
+    if(Array.isArray(commonSrc)) {
+      addFiles(commonSrc);
+    } else {
+      addFile(commonSrc);
+    }
+
+    addToEnv(data);
 
     if (this.files.length) {
-      this.files[0].src.forEach(function(file){
-        var fileContent = grunt.file.read(file);
-        var data = readJson(fileContent) || readIni(fileContent) || {};
-        grunt.util._.extend(process.env, data);
-      });
+      addFiles(this.files[0].src);
     }
   });
 };
