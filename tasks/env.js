@@ -14,6 +14,22 @@ var _ = require('lodash'),
 
 module.exports = function (grunt) {
 
+  var readJson = function (file) {
+    try {
+      return grunt.file.readJSON(file);
+    } catch(e) {
+      return;
+    }
+  };
+
+  var readIni = function (file) {
+    try {
+      return ini.parse(grunt.file.read(file));
+    } catch(e) {
+      return;
+    }
+  };
+
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
 
     var data = grunt.util._.clone(this.data);
@@ -32,9 +48,8 @@ module.exports = function (grunt) {
         processDirectives(d);
       } else {
         this.files[0].src.forEach(function(file){
-          var fileContent = grunt.file.read(file);
-          var data = readJson(fileContent) || readIni(fileContent) || {};
-          processDirectives(data);
+          var data = readJson(file) || readIni(file) || {};
+          grunt.util._.extend(process.env, data);
         });
       }
     }
@@ -94,7 +109,6 @@ module.exports = function (grunt) {
 };
 
 
-
 function readJson(content) {
   try {
     return JSON.parse(content);
@@ -110,4 +124,3 @@ function readIni(content) {
     return;
   }
 }
-
