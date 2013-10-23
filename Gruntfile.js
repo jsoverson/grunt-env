@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         }
       },
       testDotEnv : {
-        src : ['.env', '.env.json']
+        src : ['.env', '.env.ini', '.env.json', '.env.yaml']
       },
       testEnvdir: {
         src : ['.envdir/*'],
@@ -122,20 +122,35 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask('writeDotEnv', function(){
+<<<<<<< HEAD
     grunt.file.write('.env', "dotEnvFileData=bar\ndotEnvFileOption=baz");
     grunt.file.write('.env.json', '{"jsonValue" : "foo","push" : {"PATHLIKE":"jsonPath"}}');
+=======
+    grunt.file.write('.env', "dotEnvFileData=bar\ndotEnvFileOption=baz\n");
+    grunt.file.write('.env.ini', "dotEnvIniFileData=bar.ini\ndotEnvIniFileOption=baz.ini\n");
+    grunt.file.write('.env.json', '{"jsonValue" : "foo"}');
+    grunt.file.write('.env.yaml', 'yamlValue: foo');
+>>>>>>> Added support for YAML file
   });
 
   grunt.registerTask('testDotEnv', function(){
     assert(!process.env.src, 'Should not include src');
     assert.equal(process.env.jsonValue, 'foo', 'value from json env file should be set');
+<<<<<<< HEAD
     assert.equal(process.env.PATHLIKE, 'jsonPath', 'should process directives in json');
     assert.equal(process.env.globalOption, 'foo', 'should still get global options');
+=======
+    assert.equal(process.env.yamlValue, 'foo', 'value from yaml env file should be set');
+>>>>>>> Added support for YAML file
     assert.equal(process.env.dotEnvFileData, 'bar', 'dotEnvFileData should be set');
     assert.equal(process.env.dotEnvFileOption, 'baz', 'dotEnvFileOption should be set');
+    assert.equal(process.env.dotEnvIniFileData, 'bar.ini', 'dotEnvIniFileData should be set');
+    assert.equal(process.env.dotEnvIniFileOption, 'baz.ini', 'dotEnvIniFileOption should be set');
     delete process.env.jsonValue;
+    delete process.env.yamlValue;
     delete process.env.dotEnvFileData;
     delete process.env.dotEnvFileOption;
+<<<<<<< HEAD
     delete process.env.PATHLIKE;
     delete process.env.globalOption;
   });
@@ -154,6 +169,10 @@ module.exports = function(grunt) {
     assert(!process.env.FOO, 'Should not include subdirectories');
     delete process.env.ENVDIR;
     delete process.env.BAR;
+=======
+    delete process.env.dotEnvIniFileData;
+    delete process.env.dotEnvIniFileOption;
+>>>>>>> Added support for YAML file
   });
 
   // Default task.
