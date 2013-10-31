@@ -3,8 +3,8 @@
 Specify an ENV configuration as a task, e.g.
 
 ```
-grunt.registerTask('dev', 'env:dev lint server watch');
-grunt.registerTask('build', 'env:build lint other:build:tasks');
+grunt.registerTask('dev', ['env:dev', 'lint', 'server', 'watch']);
+grunt.registerTask('build', ['env:build', 'lint', 'other:build:tasks']);
 ```
 
 ## Getting Started
