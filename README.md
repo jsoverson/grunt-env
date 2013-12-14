@@ -32,7 +32,13 @@ grunt.loadNpmTasks('grunt-env');
     },
     build : {
       NODE_ENV : 'production',
-      DEST     : 'dist' 
+      DEST     : 'dist',
+      extend   : {
+        PATH     : {
+          'value': 'node_modules/.bin',
+          'delimiter': ':'
+        }
+      }
     }
   }
 ```
@@ -51,6 +57,46 @@ You can specify environment values in INI or JSON style and load them via the sr
   }
 ```
 
+## Dynamic ENV configuration
+
+The following directives can be specified in the `options` to alter the environment in more specific ways
+
+- `add`
+  - This will add the variables *only* if they don't already exist
+- `replace`
+  - Will replace the variable with the value specified
+- `unshift`
+  - Will prepend the value to the variable specified, optionally specifying a 'delimiter'
+- `push`
+  - Same as unshift, but at the end of the value.
+- `concat`
+  - Functionally same as `push`, added for readability
+
+```
+yourtask : {
+  USER : 'you',
+  PATH : '/bin:/usr/bin'
+
+  options : {
+    add : {
+      VERBOSE : '1' // will only be added if VERBOSE isn't already set
+    },
+    replace : {
+      USER : 'me'
+    },
+    push : {
+      PATH : {
+        value : '~/bin',
+        delimiter : ':'
+      }
+    },
+    unshift : {
+      PATH : '/sbin:'
+    }
+  }
+}
+```
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
@@ -64,7 +110,6 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 
 ## License
 
-Copyright (c) 2012 OneHealth Solutions, Inc
 Licensed under the Apache 2.0 license.
 
 ## Author
