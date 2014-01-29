@@ -25,7 +25,9 @@ module.exports = function (grunt) {
     if (this.files.length) {
       if(options.envdir) {
         var d = _.zipObject(this.files[0].src.map(function(file){
-          return [path.basename(file), grunt.file.read(file)];
+          if(grunt.file.isFile(file)) {
+            return [path.basename(file), grunt.file.read(file)];
+          }
         }));
         processDirectives(d);
       } else {

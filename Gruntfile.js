@@ -128,13 +128,19 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask("writeEnvdir", function(){
+    grunt.file.mkdir('.envdir/bar');
     grunt.file.write('.envdir/ENVDIR', "envdir");
+    grunt.file.write('.envdir/BAZ', "baz");
+    grunt.file.write('.envdir/bar/FOO', "foo");
   });
 
   grunt.registerTask('testEnvdir', function(){
     assert(!process.env.envdir, 'Should not include src');
     assert.equal(process.env.ENVDIR, 'envdir', 'value from envdir file should be set');
+    assert.equal(process.env.BAZ, 'baz', 'value from envdir file should be set');
+    assert(!process.env.FOO, 'Should not include subdirectories');
     delete process.env.ENVDIR;
+    delete process.env.BAR;
   });
 
   // Default task.
