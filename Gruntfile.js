@@ -22,6 +22,12 @@ module.exports = function(grunt) {
       testDotEnv : {
         src : ['.env', '.env.json']
       },
+      testEnvdir: {
+        src : ['.envdir/*'],
+        options: {
+          envdir: true
+        }
+      },
       testDirectives : {
         ADD_NEGATIVE : 'should not change',
         PATHLIKE : 'foo:bar:baz',
@@ -121,6 +127,16 @@ module.exports = function(grunt) {
     delete process.env.globalOption;
   });
 
+  grunt.registerTask("writeEnvdir", function(){
+    grunt.file.write('.envdir/ENVDIR', "envdir");
+  });
+
+  grunt.registerTask('testEnvdir', function(){
+    assert(!process.env.envdir, 'Should not include src');
+    assert.equal(process.env.ENVDIR, 'envdir', 'value from envdir file should be set');
+    delete process.env.ENVDIR;
+  });
+
   // Default task.
   grunt.registerTask('default', [
     'clean',
@@ -134,6 +150,9 @@ module.exports = function(grunt) {
     'testDotEnv',
     'env:testDirectives',
     'testDirectives',
+    'writeEnvdir',
+    'env:testEnvdir',
+    'testEnvdir',
     'clean'
   ]);
 

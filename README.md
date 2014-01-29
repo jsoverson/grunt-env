@@ -57,6 +57,21 @@ You can specify environment values in INI or JSON style and load them via the sr
   }
 ```
 
+## Using envdir
+
+You can specify files to read environment variables from, similar to the daemontools [envdir](http://cr.yp.to/daemontools/envdir.html) utility.
+
+```js
+  env : {
+    dev : {
+      src : ["envdir/*"],
+      options: {
+        envdir: true
+      }
+    }
+  }
+```
+
 ## Dynamic ENV configuration
 
 The following directives can be specified in the `options` to alter the environment in more specific ways
