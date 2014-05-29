@@ -97,6 +97,10 @@ yourtask : {
 }
 ```
 
+## Important note on data types
+
+Environment variables are strings only. If you attempt to assign complex objects, they will be converted to strings.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [grunt][grunt].
 
