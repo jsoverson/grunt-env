@@ -33,7 +33,7 @@ grunt.loadNpmTasks('grunt-env');
     build : {
       NODE_ENV : 'production',
       DEST     : 'dist',
-      extend   : {
+      concat   : {
         PATH     : {
           'value': 'node_modules/.bin',
           'delimiter': ':'
