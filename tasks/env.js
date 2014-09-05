@@ -9,7 +9,8 @@
 "use strict";
 
 var _ = require('lodash'),
-    ini = require('ini');
+    ini = require('ini'),
+    path = require('path');
 
 module.exports = function (grunt) {
 
@@ -19,15 +20,27 @@ module.exports = function (grunt) {
     delete data.src;
     processDirectives(data);
 
+    var options = this.options();
+
     if (this.files.length) {
-      this.files[0].src.forEach(function(file){
-        var fileContent = grunt.file.read(file);
-        var data = readJson(fileContent) || readIni(fileContent) || {};
-        processDirectives(data);
-      });
+      if(options.envdir) {
+        var d = _.zipObject(this.files[0].src.map(function(file){
+          if(grunt.file.isFile(file)) {
+            return [path.basename(file), grunt.file.read(file)];
+          }
+        }));
+        processDirectives(d);
+      } else {
+        this.files[0].src.forEach(function(file){
+          var fileContent = grunt.file.read(file);
+          var data = readJson(fileContent) || readIni(fileContent) || {};
+          processDirectives(data);
+        });
+      }
     }
 
-    processDirectives(this.options());
+    delete options.envdir;
+    processDirectives(options);
   });
 
   function processDirectives(options) {
