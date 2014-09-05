@@ -47,7 +47,7 @@ module.exports = function (grunt) {
         _.forEach(optionData, fn);
       } else {
         var data = {};
-        data[option] = optionData;
+        data[option] = typeof optionData === 'function' ? optionData() : optionData;
         _.extend(process.env, data);
       }
     });

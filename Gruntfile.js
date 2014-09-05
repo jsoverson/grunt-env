@@ -52,6 +52,12 @@ module.exports = function(grunt) {
 
           }
         }
+      },
+      testFunctions: {
+        DATA_FROM_FUNCTION: function() {
+          return process.env.DATA_FROM_FUNCTION || '123';
+        },
+        A_STRING: 'string'
       }
     },
     clean : {
@@ -84,6 +90,13 @@ module.exports = function(grunt) {
     assert.equal(process.env.localOption, 'baz', 'localOption should be set');
     delete process.env.globalOption;
     delete process.env.localOption;
+  });
+
+  grunt.registerTask('testFunctions', function(){
+    assert.equal(process.env.DATA_FROM_FUNCTION, '123', 'should set from function');
+    assert.equal(process.env.A_STRING, 'string', 'should set from string');
+    delete process.env.DATA_FROM_FUNCTION;
+    delete process.env.A_STRING;
   });
 
   grunt.registerTask('testDirectives', function(){
@@ -134,6 +147,8 @@ module.exports = function(grunt) {
     'testDotEnv',
     'env:testDirectives',
     'testDirectives',
+    'env:testFunctions',
+    'testFunctions',
     'clean'
   ]);
 
