@@ -42,7 +42,7 @@ grunt.loadNpmTasks('grunt-env');
     },
     functions: {
       BY_FUNCTION: function() {
-        var value = '123;
+        var value = '123';
         grunt.log.writeln('setting BY_FUNCTION to ' + value);
         return value;
       }
