@@ -8,11 +8,33 @@
 
 "use strict";
 
-var _ = require('lodash'),
-    ini = require('ini'),
-    path = require('path');
+var ini = require('ini');
+var extensionPattern = /\.([^\.]+)$/i;
 
 module.exports = function (grunt) {
+  var readJson = function (file) {
+    try {
+      return grunt.file.readJSON(file);
+    } catch(e) {
+      return;
+    }
+  };
+
+  var readYaml = function (file) {
+    try {
+      return grunt.file.readYAML(file);
+    } catch(e) {
+      return;
+    }
+  };
+
+  var readIni = function (file) {
+    try {
+      return ini.parse(grunt.file.read(file));
+    } catch(e) {
+      return;
+    }
+  };
 
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
 
@@ -32,9 +54,23 @@ module.exports = function (grunt) {
         processDirectives(d);
       } else {
         this.files[0].src.forEach(function(file){
-          var fileContent = grunt.file.read(file);
-          var data = readJson(fileContent) || readIni(fileContent) || {};
-          processDirectives(data);
+          var match = file.match(extensionPattern);
+          if (!match) {
+            grunt.log.error('file not supported.');
+            return;
+          }
+          var parse = (function() {
+            switch(match[1]) {
+              case 'json': return readJson;
+              case 'yaml': return readYaml;
+              //jshint complains about no break statement
+              case 'ini': return readIni;
+              default: return readIni;
+            }
+          })();
+
+          var data = parse(file) || {};
+          grunt.util._.extend(process.env, data);
         });
       }
     }
@@ -92,22 +128,3 @@ module.exports = function (grunt) {
     }
   }
 };
-
-
-
-function readJson(content) {
-  try {
-    return JSON.parse(content);
-  } catch(e) {
-    return;
-  }
-}
-
-function readIni(content) {
-  try {
-    return ini.parse(content);
-  } catch(e) {
-    return;
-  }
-}
-

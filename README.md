@@ -51,13 +51,16 @@ grunt.loadNpmTasks('grunt-env');
 ```
 ## Using external files
 
-You can specify environment values in INI or JSON style and load them via the src option.
+You can specify environment values in INI, JSON or YAML style and load them via the src option.
 
 ```js
   env : {
     dev : {
       src : "dev.json"
     },
+    prod: {
+      src: "settings.yaml"
+    }
     heroku : {
       src : ".env"
     }
