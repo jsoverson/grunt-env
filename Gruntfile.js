@@ -75,6 +75,12 @@ module.exports = function(grunt) {
       },
       task : ['tasks/**/*.js'],
       Gruntfile: ['Gruntfile.js']
+    },
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      src: ['tasks/**/*.js', 'lib/**/*.js', 'Gruntfile.js']
     }
   });
 
@@ -82,6 +88,7 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-jscs');
 
   var assert = require('assert');
 
@@ -169,6 +176,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', [
     'clean',
     'jshint',
+    'jscs',
     'env:testData',
     'testData',
     'env:testOptions',
