@@ -69,7 +69,7 @@ module.exports = function (grunt) {
   }
 
   function add(value, key) {
-    if (process.env[key]) return grunt.log.writeln(key + ' already exists, leaving unchanged.');
+    if (process.env[key]) return grunt.verbose.writeln(key + ' already exists, leaving unchanged.');
 
     var data = {};
     data[key] = value;
@@ -77,7 +77,7 @@ module.exports = function (grunt) {
   }
 
   function replace(value, key) {
-    if (!process.env[key]) return grunt.log.writeln(key + ' doesn\'t exist, refusing to replace.');
+    if (!process.env[key]) return grunt.verbose.writeln(key + ' doesn\'t exist, refusing to replace.');
     process.env[key] = value;
   }
 
