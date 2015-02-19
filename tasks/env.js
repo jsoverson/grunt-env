@@ -6,14 +6,14 @@
  * Licensed under the Apache 2.0 license.
  */
 
-"use strict";
+'use strict';
 
-var _ = require('lodash'),
-    path = require('path'),
-    utils = require(process.cwd() + '/lib/utils');
+var _ = require('lodash');
+var path = require('path');
+var utils = require(process.cwd() + '/lib/utils');
 
-module.exports = function (grunt) {
-  var parse = function (file) {
+module.exports = function(grunt) {
+  var parse = function(file) {
     // pass grunt reference to parse
     return utils.parse(grunt, file);
   };
@@ -27,15 +27,15 @@ module.exports = function (grunt) {
     var options = this.options();
 
     if (this.files.length) {
-      if(options.envdir) {
-        var d = _.zipObject(this.files[0].src.map(function(file){
-          if(grunt.file.isFile(file)) {
+      if (options.envdir) {
+        var d = _.zipObject(this.files[0].src.map(function(file) {
+          if (grunt.file.isFile(file)) {
             return [path.basename(file), parse(file)];
           }
         }));
         processDirectives(d);
       } else {
-        this.files[0].src.forEach(function(file){
+        this.files[0].src.forEach(function(file) {
           processDirectives(parse(file));
         });
       }
@@ -56,7 +56,9 @@ module.exports = function (grunt) {
     };
 
     _.forEach(options, function(optionData, option) {
-      if (option === 'options') return;
+      if (option === 'options') {
+        return;
+      }
       var fn = dispatch[option];
       if (fn && typeof optionData === 'object') {
         _.forEach(optionData, fn);
@@ -69,7 +71,9 @@ module.exports = function (grunt) {
   }
 
   function add(value, key) {
-    if (process.env[key]) return grunt.verbose.writeln(key + ' already exists, leaving unchanged.');
+    if (process.env[key]) {
+      return grunt.verbose.writeln(key + ' already exists, leaving unchanged.');
+    }
 
     var data = {};
     data[key] = value;
@@ -77,7 +81,9 @@ module.exports = function (grunt) {
   }
 
   function replace(value, key) {
-    if (!process.env[key]) return grunt.verbose.writeln(key + ' doesn\'t exist, refusing to replace.');
+    if (!process.env[key]) {
+      return grunt.verbose.writeln(key + ' doesn\'t exist, refusing to replace.');
+    }
     process.env[key] = value;
   }
 
@@ -85,7 +91,9 @@ module.exports = function (grunt) {
     process.env[key] = process.env[key] || '';
     var delimiter = value ? value.delimiter || '' : '';
 
-    if (typeof value === 'object') value = value.value;
+    if (typeof value === 'object') {
+      value = value.value;
+    }
 
     if (method === 'unshift') {
       process.env[key] = value + delimiter + process.env[key];
