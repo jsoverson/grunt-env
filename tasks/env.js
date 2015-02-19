@@ -16,7 +16,7 @@ module.exports = function (grunt) {
 
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
 
-    var data = grunt.util._.clone(this.data);
+    var data = _.clone(this.data);
     delete data.src;
     processDirectives(data);
 
@@ -110,4 +110,3 @@ function readIni(content) {
     return;
   }
 }
-
