@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         }
       },
       testDotEnv : {
-        src : ['.env', '.env.json']
+        src : ['.env', '.env.json', '.env.ini', '.env.yaml']
       },
       testEnvdir: {
         src : ['.envdir/*'],
@@ -124,6 +124,8 @@ module.exports = function(grunt) {
   grunt.registerTask('writeDotEnv', function(){
     grunt.file.write('.env', "dotEnvFileData=bar\ndotEnvFileOption=baz");
     grunt.file.write('.env.json', '{"jsonValue" : "foo","push" : {"PATHLIKE":"jsonPath"}}');
+    grunt.file.write('.env.ini', "dotEnvIniFileData=bar.ini\ndotEnvIniFileOption=baz.ini\n");
+    grunt.file.write('.env.yaml', 'yamlValue: foo');
   });
 
   grunt.registerTask('testDotEnv', function(){
@@ -133,11 +135,17 @@ module.exports = function(grunt) {
     assert.equal(process.env.globalOption, 'foo', 'should still get global options');
     assert.equal(process.env.dotEnvFileData, 'bar', 'dotEnvFileData should be set');
     assert.equal(process.env.dotEnvFileOption, 'baz', 'dotEnvFileOption should be set');
+    assert.equal(process.env.dotEnvIniFileData, 'bar.ini', 'dotEnvIniFileData should be set');
+    assert.equal(process.env.dotEnvIniFileOption, 'baz.ini', 'ndotEnvIniFileOption should be set');
+    assert.equal(process.env.yamlValue, 'foo', 'yamlValue should be set');
     delete process.env.jsonValue;
     delete process.env.dotEnvFileData;
     delete process.env.dotEnvFileOption;
     delete process.env.PATHLIKE;
     delete process.env.globalOption;
+    delete process.env.dotEnvIniFileData;
+    delete process.env.dotEnvIniFileOption;
+    delete process.env.yamlValue;
   });
 
   grunt.registerTask("writeEnvdir", function(){

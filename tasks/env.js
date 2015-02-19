@@ -9,14 +9,18 @@
 "use strict";
 
 var _ = require('lodash'),
-    ini = require('ini'),
-    path = require('path');
+    path = require('path'),
+    utils = require(process.cwd() + '/lib/utils');
 
 module.exports = function (grunt) {
+  var parse = function (file) {
+    // pass grunt reference to parse
+    return utils.parse(grunt, file);
+  };
 
   grunt.registerMultiTask('env', 'Specify an ENV configuration for future tasks in the chain', function() {
 
-    var data = grunt.util._.clone(this.data);
+    var data = _.clone(this.data);
     delete data.src;
     processDirectives(data);
 
@@ -26,15 +30,13 @@ module.exports = function (grunt) {
       if(options.envdir) {
         var d = _.zipObject(this.files[0].src.map(function(file){
           if(grunt.file.isFile(file)) {
-            return [path.basename(file), grunt.file.read(file)];
+            return [path.basename(file), parse(file)];
           }
         }));
         processDirectives(d);
       } else {
         this.files[0].src.forEach(function(file){
-          var fileContent = grunt.file.read(file);
-          var data = readJson(fileContent) || readIni(fileContent) || {};
-          processDirectives(data);
+          processDirectives(parse(file));
         });
       }
     }
@@ -92,22 +94,3 @@ module.exports = function (grunt) {
     }
   }
 };
-
-
-
-function readJson(content) {
-  try {
-    return JSON.parse(content);
-  } catch(e) {
-    return;
-  }
-}
-
-function readIni(content) {
-  try {
-    return ini.parse(content);
-  } catch(e) {
-    return;
-  }
-}
-
