@@ -73,7 +73,8 @@ module.exports = function(grunt) {
       options: {
         jshintrc : '.jshintrc'
       },
-      task : ['tasks/**/*.js']
+      task : ['tasks/**/*.js'],
+      Gruntfile: ['Gruntfile.js']
     }
   });
 
