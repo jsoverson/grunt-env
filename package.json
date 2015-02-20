@@ -1,7 +1,7 @@
 {
   "name": "grunt-env",
   "description": "Specify an ENV configuration for future tasks in the chain",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "homepage": "https://github.com/jsoverson/grunt-env",
   "author": {
     "name": "Jarrod Overson",
