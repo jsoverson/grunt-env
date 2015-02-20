@@ -10,7 +10,7 @@
 
 var _ = require('lodash');
 var path = require('path');
-var utils = require(process.cwd() + '/lib/utils');
+var utils = require('../lib/utils');
 
 module.exports = function(grunt) {
   var parse = function(file) {
