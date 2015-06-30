@@ -122,6 +122,40 @@ yourtask : {
 }
 ```
 
+## Environment-specific configuration
+
+In order to configure your tasks based on the environment, you need to define a task and use templates:
+
+```
+
+grunt.initConfig({
+  env: {
+    dev: {
+      MY_CONST: 'a'
+    },
+    prod: {
+      MY_CONST: 'b'
+    }
+  },
+  myTask: {
+    options: {
+      myOpt: <%= MY_CONST %>
+    }
+  }
+});
+
+grunt.registerTask('loadconst', 'Load constants', function() {
+    grunt.config('MY_CONST', process.env.MY_CONST);
+});
+
+grunt.registerTask('default', [
+    'env:dev',
+    'loadconst',
+    'myTask'
+]);
+
+```
+
 ## Important note on data types
 
 Environment variables are strings only. If you attempt to assign complex objects, they will be converted to strings.
