@@ -10,6 +10,10 @@ module.exports = function(grunt) {
         globalOption: 'foo'
       },
       testData: {
+        UNDEFINED_OPTION: function() {
+          // logic here might return undefined or not, but for testing we do
+          return undefined;
+        },
         TEST: 'test',
         data: 'bar'
       },
@@ -97,6 +101,12 @@ module.exports = function(grunt) {
     assert.equal(process.env.data, 'bar', 'data should be set');
     delete process.env.globalOption;
     delete process.env.data;
+
+    assert.equal(
+      process.env.hasOwnProperty('undefinedOption'),
+      false,
+      'undefinedOption should not be set on process.env'
+    );
   });
 
   grunt.registerTask('testOptions', function() {
