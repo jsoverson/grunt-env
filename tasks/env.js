@@ -65,7 +65,10 @@ module.exports = function(grunt) {
       } else {
         var data = {};
         data[option] = typeof optionData === 'function' ? optionData() : optionData;
-        _.extend(process.env, data);
+
+        if (typeof data[option] !== undefined) {
+          _.extend(process.env, data);
+        }
       }
     });
   }
