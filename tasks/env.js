@@ -66,7 +66,7 @@ module.exports = function(grunt) {
         var data = {};
         data[option] = typeof optionData === 'function' ? optionData() : optionData;
 
-        if (typeof data[option] !== undefined) {
+        if (data[option] !== undefined) {
           _.extend(process.env, data);
         }
       }

@@ -103,9 +103,9 @@ module.exports = function(grunt) {
     delete process.env.data;
 
     assert.equal(
-      process.env.hasOwnProperty('undefinedOption'),
+      process.env.hasOwnProperty('UNDEFINED_OPTION'),
       false,
-      'undefinedOption should not be set on process.env'
+      'UNDEFINED_OPTION should not be set on process.env'
     );
   });
 
