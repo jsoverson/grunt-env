@@ -28,11 +28,11 @@ module.exports = function(grunt) {
 
     if (this.files.length) {
       if (options.envdir) {
-        var d = _.zipObject(this.files[0].src.map(function(file) {
+        var d = _.fromPairs(this.files[0].src.map(function(file) {
           if (grunt.file.isFile(file)) {
             return [path.basename(file), parse(file)];
           }
-        }));
+        }).filter(function(d) { return d; }));
         processDirectives(d);
       } else {
         this.files[0].src.forEach(function(file) {
