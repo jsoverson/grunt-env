@@ -27,12 +27,14 @@ module.exports = function(grunt) {
     var options = this.options();
 
     if (this.files.length) {
+      const files = this.files;
       if (options.envdir) {
-        var d = _.zipObject(this.files[0].src.map(function(file) {
+        const entries = files[0].src.map(function(file) {
           if (grunt.file.isFile(file)) {
             return [path.basename(file), parse(file)];
           }
-        }));
+        }).filter(function(_){return !!_});
+        var d = _.fromPairs(entries);
         processDirectives(d);
       } else {
         this.files[0].src.forEach(function(file) {

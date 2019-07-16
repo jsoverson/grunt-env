@@ -68,27 +68,12 @@ module.exports = function(grunt) {
     },
     clean: {
       env: ['.env*']
-    },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      task: ['tasks/**/*.js'],
-      Gruntfile: ['Gruntfile.js']
-    },
-    jscs: {
-      options: {
-        config: '.jscsrc'
-      },
-      src: ['tasks/**/*.js', 'lib/**/*.js', 'Gruntfile.js']
     }
   });
 
   // Load local tasks.
   grunt.loadTasks('tasks');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-jscs');
 
   var assert = require('assert');
 
@@ -181,8 +166,6 @@ module.exports = function(grunt) {
   // Default task.
   grunt.registerTask('default', [
     'clean',
-    'jshint',
-    'jscs',
     'env:testData',
     'testData',
     'env:testOptions',
